@@ -18,16 +18,10 @@ ciudades = [
     "Buenos Aires"
 ]
 
-# =========================================
-# CONFIG
-# =========================================
 
 TOTAL_REGISTROS = 3000000
 BATCH_SIZE = 10000
 
-# =========================================
-# INSERT SQL
-# =========================================
 
 sql = """
 INSERT INTO clientes(
@@ -37,10 +31,6 @@ INSERT INTO clientes(
 )
 VALUES(%s,%s,%s)
 """
-
-# =========================================
-# GENERACION MASIVA
-# =========================================
 
 for inicio in range(0, TOTAL_REGISTROS, BATCH_SIZE):
 

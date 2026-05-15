@@ -1,10 +1,6 @@
 import pymysql
 import csv
 
-# =========================================
-# CONEXION MYSQL
-# =========================================
-
 conexion = pymysql.connect(
     host="host.docker.internal",
     user="root",
@@ -12,23 +8,15 @@ conexion = pymysql.connect(
     database="streaming_lab"
 )
 
-# =========================================
-# CURSOR
-# =========================================
 
 cursor = conexion.cursor()
 
-# =========================================
-# QUERY
-# =========================================
+
 
 query = "SELECT * FROM clientes"
 
 cursor.execute(query)
 
-# =========================================
-# CREAR CSV
-# =========================================
 
 with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
 
@@ -42,9 +30,6 @@ with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
         "ciudad"
     ])
 
-    # =====================================
-    # STREAMING POR CHUNKS
-    # =====================================
 
     while True:
 
@@ -57,9 +42,6 @@ with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
 
         print(f"Chunk procesado: {len(rows)} registros")
 
-# =========================================
-# CERRAR
-# =========================================
 
 cursor.close()
 conexion.close()
