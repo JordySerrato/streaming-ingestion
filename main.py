@@ -6,7 +6,7 @@ import csv
 # =========================================
 
 conexion = pymysql.connect(
-    host="localhost",
+    host="host.docker.internal",
     user="root",
     password="123456",
     database="streaming_lab"
@@ -48,7 +48,7 @@ with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
 
     while True:
 
-        rows = cursor.fetchmany(2)
+        rows = cursor.fetchmany(1000)
 
         if not rows:
             break
