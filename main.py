@@ -1,35 +1,39 @@
 import pymysql
 import csv
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conexion = pymysql.connect(
-    host="host.docker.internal",
-    user="root",
-    password="123456",
-    database="streaming_lab"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
-
 cursor = conexion.cursor()
-
-
 
 query = "SELECT * FROM clientes"
 
 cursor.execute(query)
 
-
-with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
+with open(
+    "output_stream.csv",
+    "w",
+    newline="",
+    encoding="utf-8"
+) as archivo:
 
     writer = csv.writer(archivo)
 
-    # encabezados
     writer.writerow([
         "id",
         "nombre",
         "correo",
         "ciudad"
     ])
-
 
     while True:
 
@@ -41,7 +45,6 @@ with open("output_stream.csv", "w", newline="", encoding="utf-8") as archivo:
         writer.writerows(rows)
 
         print(f"Chunk procesado: {len(rows)} registros")
-
 
 cursor.close()
 conexion.close()

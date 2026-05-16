@@ -1,11 +1,16 @@
 import pymysql
 import random
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conexion = pymysql.connect(
-    host="host.docker.internal",
-    user="root",
-    password="123456",
-    database="streaming_lab"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME")
 )
 
 cursor = conexion.cursor()
@@ -18,10 +23,8 @@ ciudades = [
     "Buenos Aires"
 ]
 
-
 TOTAL_REGISTROS = 3000000
 BATCH_SIZE = 10000
-
 
 sql = """
 INSERT INTO clientes(
