@@ -1,52 +1,22 @@
-import pymysql
-import csv
-import os
+from adapters.mysql_adapter import MySQLAdapter
 
-from dotenv import load_dotenv
+from services.ingestion_service import IngestionService
 
-load_dotenv()
-
-conexion = pymysql.connect(
-    host=os.getenv("DB_HOST"),
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    database=os.getenv("DB_NAME")
+from config.settings import (
+    TABLE_NAME,
+    CHUNK_SIZE,
+    OUTPUT_FILE
 )
 
-cursor = conexion.cursor()
+adapter = MySQLAdapter()
 
-query = "SELECT * FROM clientes"
+service = IngestionService()
 
-cursor.execute(query)
+query = f"SELECT * FROM {TABLE_NAME}"
 
-with open(
-    "output_stream.csv",
-    "w",
-    newline="",
-    encoding="utf-8"
-) as archivo:
-
-    writer = csv.writer(archivo)
-
-    writer.writerow([
-        "id",
-        "nombre",
-        "correo",
-        "ciudad"
-    ])
-
-    while True:
-
-        rows = cursor.fetchmany(1000)
-
-        if not rows:
-            break
-
-        writer.writerows(rows)
-
-        print(f"Chunk procesado: {len(rows)} registros")
-
-cursor.close()
-conexion.close()
-
-print("Exportación completada")
+service.process_data(
+    adapter=adapter,
+    query=query,
+    chunk_size=CHUNK_SIZE,
+    output_file=OUTPUT_FILE
+)

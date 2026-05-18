@@ -1,36 +1,16 @@
-# Streaming Ingestion Project
+## Arquitectura
 
-Proyecto de ingesta de datos orientado a arquitectura Big Data y Medallion.
+El proyecto implementa una arquitectura desacoplada basada en adapters para soportar múltiples fuentes de datos.
 
-## Objetivo
+Actualmente soporta:
 
-Extraer millones de registros desde MySQL hacia una capa RAW/Bronze utilizando procesamiento por chunks sin cargar toda la información en memoria.
+- MySQL
+- APIs REST
 
-## Tecnologías
+Y utiliza:
 
-* Python
-* MySQL
-* Docker
-* GitHub
-* PyMySQL
-
-## Características
-
-* Procesamiento streaming con fetchmany()
-* Extracción eficiente sin pandas
-* Generación masiva de datos
-* Dockerización del proyecto
-* Simulación de capa Bronze local
-
-## Flujo
-
-MySQL → Python Streaming → CSV Bronze Layer
-
-## Ejecución
-
-```bash
-python generator.py
-python main.py
-docker build -t streaming-ingestion .
-docker run streaming-ingestion
-```
+- Streaming por chunks
+- Configuración parametrizable
+- Docker
+- Simulación de Google Cloud Storage
+- Bronze Layer ingestion
