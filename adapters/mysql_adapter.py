@@ -1,9 +1,9 @@
 import pymysql
 
 from config.settings import DB_CONFIG
+from ports.base_adapter import BaseAdapter
 
-class MySQLAdapter:
-
+class MySQLAdapter(BaseAdapter):
     def connect(self):
 
         return pymysql.connect(

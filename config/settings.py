@@ -12,7 +12,6 @@ DB_CONFIG = {
 }
 
 TABLE_NAME = os.getenv("TABLE_NAME")
-
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE"))
-
 OUTPUT_FILE = os.getenv("OUTPUT_FILE")
+SOURCE_TYPE = "mysql"

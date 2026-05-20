@@ -1,7 +1,6 @@
 import requests
-
-class APIAdapter:
-
+from ports.base_adapter import BaseAdapter
+class APIAdapter(BaseAdapter):
     def fetch_data(
         self,
         url,
